@@ -1,20 +1,47 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 
+  (process.env.NODE_ENV === 'production' 
+    ? 'https://charchahub-pmsn.onrender.com/api' 
+    : 'http://localhost:8080/api');
+
+console.log('CharchaHub API URL:', API_BASE_URL, 'ENV:', process.env.NODE_ENV);
 
 export const roomApi = {
   createRoom: async (roomName, roomKey) => {
-    const response = await fetch(`${API_BASE_URL}/room/create`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ roomName, roomKey }),
-    });
-    return response.json();
+    try {
+      console.log('Creating room with URL:', `${API_BASE_URL}/room/create`);
+      const response = await fetch(`${API_BASE_URL}/room/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ roomName, roomKey }),
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      return response.json();
+    } catch (error) {
+      console.error('Create room error:', error);
+      throw error;
+    }
   },
 
   findRoomByKey: async (roomKey) => {
-    const response = await fetch(`${API_BASE_URL}/room/find/${roomKey}`);
-    return response.json();
+    try {
+      console.log('Finding room with URL:', `${API_BASE_URL}/room/find/${roomKey}`);
+      const response = await fetch(`${API_BASE_URL}/room/find/${roomKey}`);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      return response.json();
+    } catch (error) {
+      console.error('Find room error:', error);
+      throw error;
+    }
   },
 
   joinRoom: async (roomId, roomKey, username, avatar) => {
