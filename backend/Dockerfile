@@ -1,23 +1,35 @@
-FROM maven:3.8.6-openjdk-17 AS build
+# Use Maven image with OpenJDK 17
+FROM maven:3.9.4-eclipse-temurin-17 AS build
 
+# Set working directory
 WORKDIR /app
 
+# Copy Maven files
 COPY pom.xml .
+
+# Download dependencies (for better Docker layer caching)
 RUN mvn dependency:go-offline -B
 
-COPY src ./src
+# Copy source code
+COPY src src
+
+# Build the application
 RUN mvn clean package -DskipTests
 
+# Use OpenJDK 17 runtime for final image
 FROM openjdk:17-jdk-slim
 
+# Set working directory
 WORKDIR /app
 
+# Copy the built JAR from build stage
 COPY --from=build /app/target/demo-0.0.1-SNAPSHOT.jar app.jar
 
+# Expose port
 EXPOSE 8080
 
-ENV MONGODB_URI="mongodb://localhost:27017/charchahub"
-ENV CORS_ALLOWED_ORIGINS="http://localhost:3000"
-ENV SERVER_PORT=8080
+# Set environment variables
+ENV SPRING_PROFILES_ACTIVE=production
 
+# Run the application
 CMD ["java", "-jar", "app.jar"]
