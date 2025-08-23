@@ -25,6 +25,11 @@ public class RoomController {
                 .ok(ApiResponse.success("CharchaHub API is running", "Available endpoints: /room/create, /room/join"));
     }
 
+    @GetMapping("/test")
+    public ResponseEntity<ApiResponse<String>> test() {
+        return ResponseEntity.ok(ApiResponse.success("Room controller is working", "Test successful"));
+    }
+
     @GetMapping("/room/find/{roomKey}")
     public ResponseEntity<ApiResponse<Room>> findRoomByKey(@PathVariable String roomKey) {
         try {
@@ -38,10 +43,17 @@ public class RoomController {
     @PostMapping("/room/create")
     public ResponseEntity<ApiResponse<Room>> createRoom(@Valid @RequestBody CreateRoomRequest request) {
         try {
+            System.out.println("🔧 Creating room with name: " + request.getRoomName() + ", key: " + request.getRoomKey());
             Room room = roomService.createRoom(request);
+            System.out.println("✅ Room created successfully: " + room.getRoomId());
             return ResponseEntity.ok(ApiResponse.success("Room created successfully", room));
         } catch (IllegalArgumentException e) {
+            System.out.println("❌ Room creation failed: " + e.getMessage());
             return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
+        } catch (Exception e) {
+            System.out.println("💥 Unexpected error: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(ApiResponse.error("An unexpected error occurred: " + e.getMessage()));
         }
     }
 
