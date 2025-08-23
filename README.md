@@ -21,6 +21,7 @@ CharchaHub is a lightweight, temporary real-time chatroom platform where rooms a
 ## 🛠️ Tech Stack
 
 ### Backend
+
 - **Java 17** with Spring Boot 3.3.5
 - **MongoDB Atlas** for cloud database
 - **WebSocket (STOMP)** for real-time communication
@@ -29,6 +30,7 @@ CharchaHub is a lightweight, temporary real-time chatroom platform where rooms a
 - **Maven** for dependency management
 
 ### Frontend
+
 - **React 18** with modern hooks
 - **SockJS & STOMP** for WebSocket client
 - **CSS3** with custom properties for theming
@@ -39,6 +41,7 @@ CharchaHub is a lightweight, temporary real-time chatroom platform where rooms a
 ### Environment Variables
 
 #### Backend (Render) - Set these in your Render service:
+
 ```bash
 MONGODB_URI=mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/charchahub?retryWrites=true&w=majority&appName=Cluster0&ssl=true&authSource=admin&connectTimeoutMS=10000&socketTimeoutMS=10000
 CORS_ALLOWED_ORIGINS=https://your-frontend-domain.vercel.app
@@ -46,6 +49,7 @@ SERVER_PORT=8080
 ```
 
 #### Frontend (Vercel) - Set in Vercel dashboard:
+
 ```bash
 REACT_APP_API_URL=https://your-backend-app.onrender.com/api
 ```
@@ -53,6 +57,7 @@ REACT_APP_API_URL=https://your-backend-app.onrender.com/api
 ### Quick Deployment Steps
 
 1. **Push to GitHub**:
+
    ```bash
    git add .
    git commit -m "Deploy CharchaHub"
@@ -60,6 +65,7 @@ REACT_APP_API_URL=https://your-backend-app.onrender.com/api
    ```
 
 2. **Deploy Backend** (Render):
+
    - Connect GitHub repo → Select "Web Service"
    - Root Directory: `backend`
    - Dockerfile detected automatically
@@ -68,6 +74,7 @@ REACT_APP_API_URL=https://your-backend-app.onrender.com/api
 3. **Deploy Frontend** (Vercel):
    - Connect GitHub repo → Root Directory: `frontend`
    - Add `REACT_APP_API_URL` environment variable
+
 - **MongoDB Atlas** - Cloud database with TTL indexes
 - **WebSocket + STOMP** - Real-time messaging
 - **Spring Data MongoDB** - Database integration

@@ -12,6 +12,7 @@ This guide will help you deploy CharchaHub to Render (backend) and Vercel (front
 ## 🔧 Pre-Deployment Setup
 
 ### 1. MongoDB Atlas Setup
+
 1. Create a MongoDB Atlas cluster
 2. Get your connection string (replace username/password)
 3. Whitelist all IP addresses (0.0.0.0/0) for Render
@@ -19,6 +20,7 @@ This guide will help you deploy CharchaHub to Render (backend) and Vercel (front
 ### 2. Environment Variables Setup
 
 #### Backend Environment Variables (for Render):
+
 ```bash
 MONGODB_URI=mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/charchahub?retryWrites=true&w=majority&appName=Cluster0&ssl=true&authSource=admin&connectTimeoutMS=10000&socketTimeoutMS=10000
 CORS_ALLOWED_ORIGINS=https://your-app-name.vercel.app
@@ -26,6 +28,7 @@ SERVER_PORT=8080
 ```
 
 #### Frontend Environment Variables (for Vercel):
+
 ```bash
 REACT_APP_API_URL=https://your-backend-app.onrender.com/api
 ```
@@ -59,8 +62,8 @@ git push -u origin main
 4. **Configuration**:
    - Name: `charchahub-backend`
    - Root Directory: `backend`
-   - Build Command: *Auto-detected (Docker)*
-   - Start Command: *Auto-detected (Docker)*
+   - Build Command: _Auto-detected (Docker)_
+   - Start Command: _Auto-detected (Docker)_
 5. **Add Environment Variables**:
    - `MONGODB_URI`: Your MongoDB Atlas connection string
    - `CORS_ALLOWED_ORIGINS`: `https://your-app-name.vercel.app` (update after deploying frontend)
@@ -106,15 +109,18 @@ git push -u origin main
 ### Common Issues:
 
 1. **CORS Errors**:
+
    - Ensure `CORS_ALLOWED_ORIGINS` matches your Vercel URL exactly
    - No trailing slash in the URL
 
 2. **MongoDB Connection Issues**:
+
    - Check MongoDB Atlas network access (whitelist 0.0.0.0/0)
    - Verify connection string format
    - Ensure database user has proper permissions
 
 3. **WebSocket Connection Fails**:
+
    - Check that both HTTP and WebSocket endpoints use the same base URL
    - Verify Render service is running and healthy
 
@@ -130,6 +136,7 @@ git push -u origin main
 ## 🎉 Success!
 
 Once deployed, your CharchaHub application will be live with:
+
 - ✅ Real-time messaging
 - ✅ Image sharing
 - ✅ Cartoon avatars

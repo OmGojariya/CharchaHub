@@ -1,4 +1,3 @@
-// Predefined avatar options
 export const AVATARS = [
   '🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼',
   '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🐔',
@@ -28,6 +27,5 @@ export const formatTimestamp = (timestamp) => {
 };
 
 export const detectMessageType = (content) => {
-  // Simple detection logic - only text messages now
   return 'TEXT';
 };
