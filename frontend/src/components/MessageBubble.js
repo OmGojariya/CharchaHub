@@ -11,7 +11,7 @@ const MessageBubble = ({ message, theme, isCurrentUser }) => {
           <div className="message-content">{message.content}</div>
           <img
             src={roomApi.getImageUrl(message.imageUrl || message.content)}
-            alt="Shared image"
+            alt=""
             className="message-image"
             onClick={() => window.open(roomApi.getImageUrl(message.imageUrl || message.content), '_blank')}
           />

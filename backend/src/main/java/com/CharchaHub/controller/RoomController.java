@@ -43,7 +43,8 @@ public class RoomController {
     @PostMapping("/room/create")
     public ResponseEntity<ApiResponse<Room>> createRoom(@Valid @RequestBody CreateRoomRequest request) {
         try {
-            System.out.println("🔧 Creating room with name: " + request.getRoomName() + ", key: " + request.getRoomKey());
+            System.out
+                    .println("🔧 Creating room with name: " + request.getRoomName() + ", key: " + request.getRoomKey());
             Room room = roomService.createRoom(request);
             System.out.println("✅ Room created successfully: " + room.getRoomId());
             return ResponseEntity.ok(ApiResponse.success("Room created successfully", room));
@@ -53,7 +54,8 @@ public class RoomController {
         } catch (Exception e) {
             System.out.println("💥 Unexpected error: " + e.getMessage());
             e.printStackTrace();
-            return ResponseEntity.internalServerError().body(ApiResponse.error("An unexpected error occurred: " + e.getMessage()));
+            return ResponseEntity.internalServerError()
+                    .body(ApiResponse.error("An unexpected error occurred: " + e.getMessage()));
         }
     }
 

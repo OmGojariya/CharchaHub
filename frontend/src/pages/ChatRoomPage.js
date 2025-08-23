@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import MessageBubble from '../components/MessageBubble';
 import ChatInput from '../components/ChatInput';
@@ -21,33 +21,10 @@ const ChatRoomPage = ({ theme }) => {
   const roomData = location.state || JSON.parse(localStorage.getItem('charchahub-user') || '{}');
   const { roomId, roomKey, roomName, username, avatar, isCreator } = roomData;
 
-  useEffect(() => {
-    if (!username || !roomKey) {
-      navigate('/');
-      return;
-    }
-
-    // Load existing messages and users
-    loadChatData();
-
-    // Connect to WebSocket
-    connectWebSocket();
-
-    // Cleanup on unmount
-    return () => {
-      webSocketService.disconnect();
-    };
-  }, [roomKey, username, navigate]);
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const loadChatData = async () => {
+  const loadChatData = useCallback(async () => {
     try {
       setLoading(true);
       
-      // Load messages
       if (roomId) {
         const messagesResponse = await roomApi.getMessages(roomId);
         if (messagesResponse.success) {
@@ -55,7 +32,6 @@ const ChatRoomPage = ({ theme }) => {
         }
       }
 
-      // Initialize current user in users list
       setUsers([{ username, avatar, isOnline: true }]);
       
     } catch (error) {
@@ -64,9 +40,9 @@ const ChatRoomPage = ({ theme }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [roomId, username, avatar]);
 
-  const connectWebSocket = () => {
+  const connectWebSocket = useCallback(() => {
     webSocketService.connect(roomId || roomKey, {
       onMessage: (message) => {
         setMessages(prev => [...prev, message]);
@@ -92,7 +68,6 @@ const ChatRoomPage = ({ theme }) => {
       }
     });
 
-    // Join the room
     setTimeout(() => {
       webSocketService.addUser({
         username,
@@ -100,7 +75,29 @@ const ChatRoomPage = ({ theme }) => {
         roomKey
       });
     }, 1000);
-  };
+  }, [roomId, roomKey, username, avatar]);
+
+  useEffect(() => {
+    if (!username || !roomKey) {
+      navigate('/');
+      return;
+    }
+
+    // Load existing messages and users
+    loadChatData();
+
+    // Connect to WebSocket
+    connectWebSocket();
+
+    // Cleanup on unmount
+    return () => {
+      webSocketService.disconnect();
+    };
+  }, [roomKey, username, navigate, loadChatData, connectWebSocket]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const handleSendMessage = (messageData) => {
     const message = {
