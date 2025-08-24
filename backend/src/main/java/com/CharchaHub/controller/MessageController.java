@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/room")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"https://charcha-hub-psi.vercel.app", "https://*.vercel.app", "http://localhost:3000"})
 public class MessageController {
 
     private final MessageService messageService;

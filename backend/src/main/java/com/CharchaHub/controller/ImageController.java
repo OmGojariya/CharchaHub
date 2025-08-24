@@ -16,7 +16,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/upload")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"https://charcha-hub-psi.vercel.app", "https://*.vercel.app", "http://localhost:3000"})
 public class ImageController {
 
     private final ImageService imageService;
