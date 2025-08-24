@@ -2,6 +2,10 @@
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://charchahub-pmsn.onrender.com/api';
 
 console.log('CharchaHub API URL:', API_BASE_URL, 'ENV:', process.env.NODE_ENV);
+console.log('Environment variables:', {
+  REACT_APP_API_URL: process.env.REACT_APP_API_URL,
+  NODE_ENV: process.env.NODE_ENV
+});
 
 export const roomApi = {
   createRoom: async (roomName, roomKey) => {
@@ -9,6 +13,8 @@ export const roomApi = {
       console.log('Creating room with URL:', `${API_BASE_URL}/room/create`);
       const response = await fetch(`${API_BASE_URL}/room/create`, {
         method: 'POST',
+        mode: 'cors',
+        credentials: 'omit',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -39,7 +45,14 @@ export const roomApi = {
   findRoomByKey: async (roomKey) => {
     try {
       console.log('Finding room with URL:', `${API_BASE_URL}/room/find/${roomKey}`);
-      const response = await fetch(`${API_BASE_URL}/room/find/${roomKey}`);
+      const response = await fetch(`${API_BASE_URL}/room/find/${roomKey}`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'omit',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);

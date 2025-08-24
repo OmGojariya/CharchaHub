@@ -16,15 +16,14 @@ public class CorsConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         // Allow specific origins including your Vercel domain
         configuration.setAllowedOriginPatterns(Arrays.asList(
-            "https://charcha-hub-psi.vercel.app",
-            "https://*.vercel.app", 
-            "https://*.netlify.app",
-            "http://localhost:3000",
-            "*"
-        ));
+                "https://charcha-hub-psi.vercel.app",
+                "https://*.vercel.app",
+                "https://*.netlify.app",
+                "http://localhost:3000",
+                "*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
-        configuration.setAllowCredentials(true);
+        configuration.setAllowCredentials(false); // Changed to false since we're not sending credentials
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
