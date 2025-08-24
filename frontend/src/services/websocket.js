@@ -10,11 +10,10 @@ class WebSocketService {
 
   connect(roomId, callbacks) {
     this.currentRoomId = roomId; // Store room ID for use in other methods
-    const apiUrl = process.env.REACT_APP_API_URL || 
-      (process.env.NODE_ENV === 'production' 
-        ? 'https://charchahub-pmsn.onrender.com/api' 
-        : 'http://localhost:8080/api');
+    // Use environment variable with fallback to production URL
+    const apiUrl = process.env.REACT_APP_API_URL || 'https://charchahub-pmsn.onrender.com/api';
     const wsUrl = apiUrl.replace('/api', '/ws');
+    console.log('WebSocket connecting to:', wsUrl);
     const socket = new SockJS(wsUrl);
 
     this.stompClient = new Client({

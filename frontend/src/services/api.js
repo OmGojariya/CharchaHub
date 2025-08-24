@@ -1,7 +1,5 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || 
-  (process.env.NODE_ENV === 'production' 
-    ? 'https://charchahub-pmsn.onrender.com/api' 
-    : 'http://localhost:8080/api');
+// Use environment variable with fallback to production URL
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://charchahub-pmsn.onrender.com/api';
 
 console.log('CharchaHub API URL:', API_BASE_URL, 'ENV:', process.env.NODE_ENV);
 
@@ -24,7 +22,17 @@ export const roomApi = {
       return response.json();
     } catch (error) {
       console.error('Create room error:', error);
-      throw error;
+      console.error('Error details:', {
+        name: error.name,
+        message: error.message,
+        stack: error.stack
+      });
+      // Return a structured error response
+      return {
+        success: false,
+        message: `Network Error: ${error.message}. Please check your internet connection and try again.`,
+        error: error.name
+      };
     }
   },
 
@@ -40,7 +48,17 @@ export const roomApi = {
       return response.json();
     } catch (error) {
       console.error('Find room error:', error);
-      throw error;
+      console.error('Error details:', {
+        name: error.name,
+        message: error.message,
+        stack: error.stack
+      });
+      // Return a structured error response
+      return {
+        success: false,
+        message: `Network Error: ${error.message}. Please check your internet connection and try again.`,
+        error: error.name
+      };
     }
   },
 
