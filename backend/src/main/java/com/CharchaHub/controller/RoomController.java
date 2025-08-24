@@ -14,7 +14,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"https://charcha-hub-psi.vercel.app", "https://*.vercel.app", "http://localhost:3000"})
+@CrossOrigin(origins = { "https://charcha-hub-psi.vercel.app", "https://*.vercel.app", "http://localhost:3000" })
 public class RoomController {
 
     private final RoomService roomService;

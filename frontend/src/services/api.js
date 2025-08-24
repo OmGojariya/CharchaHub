@@ -22,7 +22,13 @@ export const roomApi = {
       });
       
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        // Try to get the error message from the response body
+        try {
+          const errorData = await response.json();
+          throw new Error(`HTTP ${response.status}: ${errorData.message || response.statusText || 'Unknown error'}`);
+        } catch (parseError) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText || 'Unknown error'}`);
+        }
       }
       
       return response.json();
@@ -55,7 +61,13 @@ export const roomApi = {
       });
       
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        // Try to get the error message from the response body
+        try {
+          const errorData = await response.json();
+          throw new Error(`HTTP ${response.status}: ${errorData.message || response.statusText || 'Unknown error'}`);
+        } catch (parseError) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText || 'Unknown error'}`);
+        }
       }
       
       return response.json();

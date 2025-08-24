@@ -60,7 +60,8 @@ const CreateRoomPage = ({ theme }) => {
       }
     } catch (error) {
       console.error('Create room error:', error);
-      setError('Network error. Please try again.');
+      // Show the actual error message from the API
+      setError(error.message || 'Network error. Please try again.');
     } finally {
       setLoading(false);
     }
